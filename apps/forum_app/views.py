@@ -1,34 +1,33 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .forms import ForumForm
+from .forms import ForumForm, CommentForm
 from .models import Comment,ForumPost
 # Create your views here.
 
-def post_list(request):
-    posts = ForumPost.objects.all()
-    form = ForumPost()
+
+def forum_view(request):
+    posts = ForumPost.objects.all().order_by('data_criacao')
+    
+    post_form = ForumForm()
+    comment_form = CommentForm()
+
     if request.method == 'POST':
-        form = ForumPost(request.POST)
-        if form.is_valid():
-            form.save()
 
-            #TODO: Ajeitar caminho
-            return redirect('post_list')
         
-    return render(request, 'forum/post_list.html', {'posts': posts, 'form': form})
-
-def post_comments(request,post_id):
-    post = get_object_or_404(ForumPost, id=post_id)
-    comentarios = post.comentarios.all() #Utiliza o related_name do model para pegar os comentarios
-    form = Comment()
-    if request.method == 'POST':
-        form = Comment(request.POST)
-        if form.is_valid():
-            comentario = form.save(commit=False)
-            comentario.post = post  # Associa o comentário ao post
-            comentario.save()
-
-            #TODO: Preencher com caminho para template
-            return redirect('post_detail', post_id=post.id)
+        if 'post_submit' in request.POST:
+            post_form = ForumForm(request.POST)
+            if post_form.is_valid():
+                post = post_form.save(commit=False)
+                post.save()
+                return redirect('forum')
         
-            #TODO: Preencher com caminho para template
-    return render(request, 'forum/post_detail.html', {'post': post, 'comentarios': comentarios, 'form': form})
+        elif 'comment_submit' in request.POST:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                post_id = request.POST.get('post_id')
+                post = get_object_or_404(ForumPost, id=post_id)
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.save()
+                return redirect('forum')
+        
+    return render(request, 'pages_app/forum.html', {'posts': posts, 'post_form': post_form, 'comment_form': comment_form})

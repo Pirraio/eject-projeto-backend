@@ -4,5 +4,5 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'pages_app/homepage.html')
 
-def forum(request):
-    return render(request, 'pages_app/forum.html')
+#def forum(request):
+#   return render(request, 'pages_app/forum.html')

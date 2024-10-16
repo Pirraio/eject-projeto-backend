@@ -27,7 +27,7 @@ class ForumPost(models.Model):
         super().save(*args, **kwargs)
 
 class Comment(models.Model):
-    post = models.ForeignKey(ForumPost, on_delete=models.CASCADE,related_name='comentarios')
+    post = models.ForeignKey(ForumPost, related_name='comentarios',on_delete=models.CASCADE,)
     autor = models.CharField(max_length=100,blank=True)
     conteudo = models.TextField()
     data_criacao = models.DateTimeField(default=timezone.now)
