@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 #from homepage.views import homepage
-from apps.pages_app.views import home, forum
+from apps.pages_app.views import home
+from apps.forum_app.views import forum_view
 #from apps.forum_app.views import forum_view
 
 from django.conf import settings
@@ -27,5 +28,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('forum', forum, name='forum')
+    path('forum', forum_view, name='forum')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
