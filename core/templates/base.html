@@ -21,9 +21,9 @@
             <div class="box">
                 <ul class="nav-links">
                     <a href="{% url 'home' %}"><li>home</li></a>
-                    <a href="videos.html"><li>vídeos</li></a>
+                    <a href="{% url "videos" %}"><li>vídeos</li></a>
                     <a href="{% url "forum" %}"><li>fórum</li></a>
-                    <a href="pais_e_profs.html"><li>pais & profs</li></a>
+                    <a href="{% url "pais_profs" %}"><li>pais & profs</li></a>
                 </ul>
             </div>
             <div class="selector">
