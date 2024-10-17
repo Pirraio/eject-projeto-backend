@@ -10,12 +10,11 @@
 
 .card_topico{
     display: inline-block;
-    text-align: center;
     align-items: center;
     border-radius: 50px;
     width: 100%;
     max-width: 100%;
-    height: 464px;
+    
     top: 1280px;
     left: 140px;
     box-shadow: 0px 6px 24px 0px #0000000D;
@@ -51,7 +50,7 @@
     width: 59px;
     height: 59px;
     border-radius: 12px;
-    position: relative; 
+    position: absolute; 
 }
 
 #quadradoamarelo {
@@ -59,11 +58,10 @@
     width: 59px;
     height: 59px;
     border-radius: 12px;
-    position: relative; 
+    position: absolute; 
 }
 
 #iconcavalo {
-    position: absolute; 
     top: 1414px; 
     left: 175px;
     height: auto;
@@ -190,13 +188,11 @@
 
 #card_add{
     width: 100%;
-    height: 268px;
     border-radius: 50px;
     box-shadow: 0px 6px 24px 0px #0000000D;
     margin-bottom: 120px;
     margin-top: 165px;
-    padding-top: 40px;
-    padding-left: 60px;
+    padding: 50px;
 }
 
 #caixadetexto{
@@ -228,8 +224,20 @@
 }
 
 textarea{
+    resize: none;
+    vertical-align: top;
+    width: 85%;
+    min-width: 90px;
+    box-sizing: border-box;
     border: none;
+    height: 100px;
 }
+
+input{
+    border: none;
+    margin-bottom: 10px;
+}
+
 ::placeholder{
     color: #BFBFBF;
 

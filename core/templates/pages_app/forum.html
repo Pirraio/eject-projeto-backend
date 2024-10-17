@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load static %}
+    
+{% load crispy_forms_tags %}
+
+{% block page_title %}Sabidinhos - Fórum{% endblock page_title %}
+
+{% block imports %}
+    <link href="{% static 'css/forum_cards.css' %}" rel="stylesheet">
+    <link href='{% static "css/forum_imagenslaterais.css" %}' rel="stylesheet">
+    <link href='{% static "css/forum_novotopico.css" %}' rel="stylesheet">
+    <link href='{% static "css/footer.css" %}' rel="stylesheet">
+    <link href='{% static "css/navbar.css" %}' rel="stylesheet">
+    <link href='{% static "css/forum_styles.css" %}' rel="stylesheet">
+    <link href='{% static "css/footer.css" %}' rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+         ul{
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul::marker{
+            content: '';
+        }
+    </style>
+    <!--Scripts-->
+    <script src="{% static "js/navbar.js" %}" defer></script>
+    
+    <!--Google fonts import-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--Montserrat font-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--DM Serif Display-->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <!--DM Sans-->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+{% endblock imports %}
+    
+{% block content %}
+
+    <div id="container">
+        <!-- Título principal e botão de ver mais -->
+        <div>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:start;">
+            <div  style="display: flex; flex-direction: column;">
+                <!-- Título da página -->
+                <h1 class="txt" id="txt_titulo">Encontre o <span id="span_grupocerto">grupo certo</span> para compartilhar seus <span id="span_interesses">interesses</span></h1>
+                    <p class="txt" id="txt_subtitulo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at mauris quis magna aliquet condimentum. Cras et turpis id eros tincidunt faucibus.</p>
+                   
+                    <!-- Botão Saber Mais com ícone -->
+                    <button id="btn_saibamais">Saber Mais<img src="{% static "img/btn_forum/seta_sabermais.svg" %}" id="icon_btn_saibamais">
+                    </button>
+                </div> 
+                
+             <!-- Imagens laterais decorativas -->
+                <div id="imagenslaterais"; style="position: absolute; margin-top: 0;">
+                    <div id="imagem1">
+                        <img src="{% static "img/imagenslateral/imagem1.png" %}">                
+                    </div>
+                    <div id="imagem2">
+                        <img src="{% static "img/imagenslateral/imagem2.png" %}">                
+                    </div>
+                    <div id="imagem3">
+                        <img src="{% static "img/imagenslateral/imagem3.png" %}">                
+                    </div>
+                    <div id="retangulo"></div>
+                </div>
+           </div>
+    </div>
+    
+    <!-- Novos tópicos -->
+
+    <section id="novotopico">
+            <!-- Caixa para adicionar novo tópico -->
+        <div id="card_add">
+            <form method="POST">
+                {% csrf_token %}
+                {{ post_form|crispy }}
+                <div style="text-align: right; padding-right: 40px;">
+                    <button id="btn_plus" type="submit" name="post_submit">
+                        <img src="{% static "img/btn_forum/plus.svg" %}">
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Primeiro tópico/comentário -->
+        <ul>  
+            <!-- Lista de mensagens no forum, for loop para mostrar todos os posts-->
+            {% for post in posts %}
+            <li>
+                <div class="card_topico" >
+                    <h3>{{ post.titulo }}</h3> <!-- Título do tópico -->
+
+                    
+                    {% if post.autor == 'Cavalo Anônimo' %}<!-- if/else para por se o dono eh cavalo ou cervo -->
+                    <div style="display: flex; text-align: center; flex-direction: row; align-items: center;">
+                    <div id="usuario">
+                        <div id="cavaloanonimo" style="display: flex;">
+                            <div id="quadradoroxo" style="display: flex; z-index: 1;"></div>  <!--quadrado do perfil-->
+                            <img src="{% static "img/cavaloanonimoimg.svg" %}" id="iconcavalo" style="display: flex; z-index: 2;">  <!-- Ícone do usuário Cavalo Anônimo -->
+                        </div>              
+                    </div>  
+                    <div style="display: flex; flex-direction: column;">
+                        <h4 id="nome_usuario">Cavalo Anônimo</h4> <!--Nome do usuário-->
+                        <p id="horario">{{ post.data_criacao|timesince }} atrás</p> <!-- Tempo desde o post -->
+                    </div>
+                </div>
+                    {% elif post.autor == 'Cervo Anônimo' %}
+                    <div style="display: flex; text-align: center; flex-direction: row; align-items: center;">
+                    <div id="usuario">
+                        <div id="cervoanonimo" style="display: flex;">
+                            <div id="quadradoamarelo" style="display: flex; z-index: 1;"></div>  <!--quadrado do perfil-->
+                            <img src="{% static 'img/cervoicon.svg' id='iconcervo' %}" style="display: flex; z-index: 2;">              
+                        </div> 
+                    </div>
+                        <div style="display: flex; flex-direction: column;">
+                            <h4 id="nome_usuario">Cervo Anônimo</h4><!--Nome do usuário-->
+                            <p id="horario">{{ post.data_criacao|timesince }} atrás</p> <!-- Tempo desde o post -->
+                        </div>
+                    </div>
+                    
+                    {% endif %}
+                    <!-- Texto do comentário resumido -->
+                    <p id="txt_comentario" style="display: flex;">{{ post.text }}</p>
+                    
+                    <!--Parte inferior do card (Botões e texto)-->
+                    <div id="parte_inferior" style="justify-content: space-between;">
+                        <div id="acoes">
+                            
+                            <!--Adicionar comentario-->
+                            <form  method="POST" style="display: flex;">                            
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                {{ comment_form|crispy }}
+                                <button id="btn_addcomentario" type="submit" name="comment_submit" style="display: flex;">
+                                    <img src="{% static "img/btn_forum/comentario.svg" id="icon_comentario" %}">    
+                                    <p>Adicionar comentário</p> 
+                                </button>
+                            </form>
+                        </div>
+                        <div>
+                            <p id="facacomo">Faça como Capivara Anônima, Falcão Anônimo e outras {{ post.comentarios.all|length }} pessoas e comente sobre <span style="font-family: DM Sans;font-weight: 700;">  Lorem ipsum dolor sit amet</span></p>
+                        </div>
+                    </div>
+                    <!-- Listar comentarios do post com for loop -->
+                    <ul>
+                        {% for comentario in post.comentarios.all %}
+                            <li>
+                                <p><strong>{{ comentario.autor }}</strong></p><!-- Autor do tópico -->                                <p>{{ comentario.conteudo }}</p><!-- Conteúdo do tópico -->
+                                <p>Enviado há {{ comentario.data_criacao|timesince }}</p>                                
+                            </li>
+                            
+                        {% empty %}<!-- Default do tópico vazio -->
+                            
+                 
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+            </li>
+            {% empty %}
+            
+            {% endfor %}
+            
+        </ul>
+        
+        <!--Topicos populares cards-->
+        <div id="topicospopulares">
+            <h2>Tópicos <span id="span_populares">populares</span></h2>
+            <div class="container_flex">
+        <!--Para cada post em posts ele roda um for e vai renderizar até o terceiro post nos tópicos populares-->
+        {% for post in posts %}
+
+        {% if forloop.counter <= 3 %}
+        
+        <div class="card_flex">
+            <h3>{{ post.titulo }}</h3>
+            <p class="txt_topicos"> {{ post.text }} </p>
+            <div class="txt_icon">
+                <img src="{% static 'img/btn_forum/comentario.svg' %}">
+                <p class="qnt_pessoas">{{ post.comentarios.all|length }} pessoas estão discutindo esse tópico</p>
+            </div>
+            <div class="txt_icon">
+                <img src="{% static 'img/btn_forum/relogio.svg' %}" class="icon_tempo">
+                <p class="tempo"> {{ post.data_criacao|timesince }} atrás</p>
+            </div>
+        
+        </div>
+        
+        {% endif %}
+
+        {% endfor %}
+
+    </div>
+    </div>
+</div>
+
+{% endblock content %}

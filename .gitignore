@@ -1,0 +1,7 @@
+# Ignorar diretórios de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+.env
+.venv

@@ -21,10 +21,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Recupera a posição do seletor da página anterior
     const previousPos = localStorage.getItem('previousPos') || '0px';
 
+
+    //Mudança para escolher a partir do título da página
     // Define a posição do seletor com base na página ativa
-    switch(currentPage) {
+    switch(document.title) {
         
-        case '{% url "home" %}':
+        case 'Sabidinhos - Home':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '40px' }
@@ -33,7 +35,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             selector.style.left = '40px';
             break;
 
-        case 'videos.html':
+        case 'Sabidinhos - Videos':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '120px' }
@@ -42,7 +44,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             selector.style.left = '120px';
             break;
 
-        case 'forum.html':
+        case 'Sabidinhos - Fórum':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '205px' }
@@ -51,7 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             selector.style.left = '205px';
             break;
 
-        case 'pais_e_profs.html':
+        case 'Sabidinhos - Pais e Professores':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '310px' }
@@ -61,8 +63,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             break;
 
         default:
-            selector.style.left = '0px';
-            selector.style.display = 'none';
+            selector.style.left = '40px';
+            //selector.style.display = 'block';
             break;
     }
 
