@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             selector.style.left = '40px';
             break;
 
-        case 'videos.html':
+        case 'Sabidinhos - Videos':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '120px' }
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             selector.style.left = '205px';
             break;
 
-        case 'pais_e_profs.html':
+        case 'Sabidinhos - Pais e Professores':
             selector.animate([
                 { left: `${previousPos}` },
                 { left: '310px' }
