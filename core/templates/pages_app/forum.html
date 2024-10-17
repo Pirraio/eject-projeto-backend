@@ -141,7 +141,7 @@
                             </form>
                         </div>
                         <div>
-                            <p id="facacomo">Faça como Capivara Anônima, Falcão Anônimo e outras 20 pessoas e comente sobre <span style="font-family: DM Sans;font-weight: 700;">  Lorem ipsum dolor sit amet</span></p>
+                            <p id="facacomo">Faça como Capivara Anônima, Falcão Anônimo e outras {{ post.comentarios.all|length }} pessoas e comente sobre <span style="font-family: DM Sans;font-weight: 700;">  Lorem ipsum dolor sit amet</span></p>
                         </div>
                     </div>
                     <!-- Listar comentarios do post com for loop -->
@@ -170,42 +170,29 @@
         <div id="topicospopulares">
             <h2>Tópicos <span id="span_populares">populares</span></h2>
             <div class="container_flex">
-                <div class="card_flex">
-                    <h3>Lorem ipsum dolor sit amet</h3>
-                    <p class="txt_topicos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at mauris quis magna aliquet condimentumt.</p>
-            <div class="txt_icon" >
-                <img src="{% static "img/btn_forum/comentario.svg" %}">    
-                <p class="qnt_pessoas">25 pessoas estão discutindo esse tópico</p>
-           </div>
-           <div class="txt_icon">
-                <img src="{% static "img/btn_forum/relogio.svg" %}" class="icon_tempo">    
-                <p class="tempo">Criado à 3 meses</p>
-           </div>
-        </div>
+        <!--Para cada post em posts ele roda um for e vai renderizar até o terceiro post nos tópicos populares-->
+        {% for post in posts %}
+
+        {% if forloop.counter <= 3 %}
+        
         <div class="card_flex">
-            <h3>Lorem ipsum dolor sit amet</h3>
-            <p class="txt_topicos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at mauris quis magna aliquet condimentumt.</p>
+            <h3>{{ post.titulo }}</h3>
+            <p class="txt_topicos"> {{ post.text }} </p>
             <div class="txt_icon">
-                <img src="{% static "img/btn_forum/comentario.svg" %}">    
-                <p class="qnt_pessoas">25 pessoas estão discutindo esse tópico</p>
-           </div>
-           <div class="txt_icon">
-                <img src="{% static "img/btn_forum/relogio.svg" %}" class="icon_tempo">    
-                <p class="tempo">Criado à 3 meses</p>
-           </div>
-        </div>       
-        <div class="card_flex">
-            <h3>Lorem ipsum dolor sit amet</h3>
-            <p class="txt_topicos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at mauris quis magna aliquet condimentumt.</p>
-           <div class="txt_icon">
-                <img src="{% static "img/btn_forum/comentario.svg" %}">    
-                <p class="qnt_pessoas">25 pessoas estão discutindo esse tópico</p>
-           </div>
-           <div class="txt_icon">
-                <img src="{% static "img/btn_forum/relogio.svg" %}" class="icon_tempo">    
-                <p class="tempo">Criado à 3 meses</p>
-           </div>
+                <img src="{% static 'img/btn_forum/comentario.svg' %}">
+                <p class="qnt_pessoas">{{ post.comentarios.all|length }} pessoas estão discutindo esse tópico</p>
+            </div>
+            <div class="txt_icon">
+                <img src="{% static 'img/btn_forum/relogio.svg' %}" class="icon_tempo">
+                <p class="tempo"> {{ post.data_criacao|timesince }} atrás</p>
+            </div>
+        
         </div>
+        
+        {% endif %}
+
+        {% endfor %}
+
     </div>
     </div>
 </div>
