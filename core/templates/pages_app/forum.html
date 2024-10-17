@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load crispy_forms_tags %}
+    
 {% block page_title %}Sabidinhos - Fórum{% endblock page_title %}
 
 {% block imports %}
@@ -13,13 +13,11 @@
     <link href="{% static "css/footer.css" %}" rel="stylesheet">
 
     <style>
-        
-        ul{
-            list-style-type: none;
-            padding-left: 0;
-        }
-        ul::marker{
-            content: '';
+        textarea{
+            resize: none;
+            vertical-align: top;
+            width: 100%;
+            box-sizing: border-box;
         }
     </style>
     <!--Scripts-->
@@ -74,8 +72,8 @@
             <!-- Caixa para adicionar novo tópico -->
         <div id="card_add">
             <form method="POST">
-                {% csrf_token %}
-                {{ post_form|crispy }}
+                {% csrf_token%}
+                {{ post_form.as_p }}
                 <div style="text-align: right; padding-right: 40px;">
                     <button id="btn_plus" type="submit" name="post_submit">
                         <img src="{% static "img/btn_forum/plus.svg" %}">
@@ -94,44 +92,48 @@
 
                     
                     {% if post.autor == 'Cavalo Anônimo' %}<!-- if/else para por se o dono eh cavalo ou cervo -->
-                    <div style="display: flex; text-align: center; flex-direction: row; align-items: center;">
                     <div id="usuario">
-                        <div id="cavaloanonimo" style="display: flex;">
-                            <div id="quadradoroxo" style="display: flex; z-index: 1;"></div>  <!--quadrado do perfil-->
-                            <img src="{% static "img/cavaloanonimoimg.svg" %}" id="iconcavalo" style="display: flex; z-index: 2;">  <!-- Ícone do usuário Cavalo Anônimo -->
+                        <div id="cavaloanonimo">
+                            <div id="quadradoroxo"></div>  <!--quadrado do perfil-->
+                            <img src="{% static "img/cavaloanonimoimg.svg" %}" id="iconcavalo">  <!-- Ícone do usuário Cavalo Anônimo -->
                         </div>              
                     </div>  
-
                     <div style="display: flex; flex-direction: column;">
                         <h4 id="nome_usuario">Cavalo Anônimo</h4> <!--Nome do usuário-->
                         <p id="horario">{{ post.data_criacao|timesince }} atrás</p> <!-- Tempo desde o post -->
                     </div>
-                    </div>
                     {% elif post.autor == 'Cervo Anônimo' %}
-                    <div style="display: flex; text-align: center; flex-direction: row; align-items: center;">
+                    
                     <div id="usuario">
-                        <div id="cervoanonimo" style="display: flex;">
-                            <div id="quadradoamarelo" style="display: flex; z-index: 1;"></div>  <!--quadrado do perfil-->
-                            <img src="{% static 'img/cervoicon.svg' id='iconcervo' %}" style="display: flex; z-index: 2;">              
-                        </div> 
-                    </div>
+                        <div id="cervoanonimo">
+                            <div id="quadradoamarelo"></div>  <!--quadrado do perfil-->
+                            <img src="{% static "img/cervoicon.svg" id="iconcervo" %}">              
+                        </div>  
                         <div style="display: flex; flex-direction: column;">
                             <h4 id="nome_usuario">Cervo Anônimo</h4><!--Nome do usuário-->
                             <p id="horario">{{ post.data_criacao|timesince }} atrás</p> <!-- Tempo desde o post -->
                         </div>
                     </div>
+                    
                     {% endif %}
                     <!-- Texto do comentário resumido -->
-                    <p id="txt_comentario" style="display: flex;">{{ post.text }}</p>
+                    <p id="txt_comentario">{{ post.text }}</p>
                     
+                    <!-- Botão para expandir o comentário -->
+                    <button id="btn_vermais">
+                        <p style="color: #D9D9D9;">Ver mais</p> <!--Texto do botão-->
+                        <img src="{% static "img/btn_forum/seta_vermais.svg"%} "> <!--Icone do botão-->          
+                    </button>
                     <!--Parte inferior do card (Botões e texto)-->
                     <div id="parte_inferior" style="justify-content: space-between;">
-                        <div id="acoes" >
-                        <!--Adicionar comentario-->
+                        <div id="acoes" style="justify-content: space-around;">
+                            <!--Salvar conteudo-->
+                            
+                            <!--Adicionar comentario-->
                             <form  method="POST" style="display: flex;">                            
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" value="{{ post.id }}">
-                                {{ comment_form|crispy }}
+                                {{ comment_form.as_p }}
                                 <button id="btn_addcomentario" type="submit" name="comment_submit" style="display: flex;">
                                     <img src="{% static "img/btn_forum/comentario.svg" id="icon_comentario" %}">    
                                     <p>Adicionar comentário</p> 
@@ -146,9 +148,9 @@
                     <ul>
                         {% for comentario in post.comentarios.all %}
                             <li>
-                                <p><strong>{{ comentario.autor }}</strong></p><!-- Autor do tópico -->
+                                <strong>{{ comentario.autor }}</strong><!-- Autor do tópico -->
                                 <p>{{ comentario.conteudo }}</p><!-- Conteúdo do tópico -->
-                                <p>Enviado há {{ comentario.data_criacao|timesince }}</p>
+                                <p><small>Enviado há {{ comentario.data_criacao|timesince }}</small></p>
                             </li>
                             
                         {% empty %}<!-- Default do tópico vazio -->
