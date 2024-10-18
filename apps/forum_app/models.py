@@ -17,12 +17,10 @@ class ForumPost(models.Model):
         # Atribuímos o valor aleatório para um autor não definido
         if not self.autor:
             number = random.randint(1, 2)
-            match number:
-                case 1:
-                    self.autor = 'Cavalo Anônimo'
-
-                case 2:
-                    self.autor = 'Cervo Anônimo'
+            if number == 1:
+                self.autor = 'Cavalo Anônimo'
+            elif number == 2:
+                self.autor = 'Cervo Anônimo'
 
         super().save(*args, **kwargs)
 
@@ -36,18 +34,14 @@ class Comment(models.Model):
         # Atribuímos o valor aleatório para um autor não definido
         if not self.autor:
             number = random.randint(1, 4)
-            match number:
-                case 1:
-                    self.autor = 'Cavalo Anônimo'
-
-                case 2:
-                    self.autor = 'Cervo Anônimo'
-                
-                case 3:
-                    self.autor = 'Capivara Anônima'
-                
-                case 4:
-                    self.autor = 'Falcão Anônimo'
+            if number == 1:
+                self.autor = 'Cavalo Anônimo'
+            elif number == 2:
+                self.autor = 'Cervo Anônimo'
+            elif number == 3:
+                self.autor = 'Capivara Anônima'
+            elif number == 4:
+                self.autor = 'Falcão Anônimo'
 
         super().save(*args, **kwargs)
 
