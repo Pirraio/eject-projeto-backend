@@ -6,7 +6,7 @@ O protótipo do site feito é voltado para o aprendizado e desenvolvimento de cr
 - Uma home com destaque para conteúdos principais e sugestões;
 - Uma página de vídeos educacionais;
 - Uma área dedicada a pais e professores com materiais de apoio;
-- Um fórum para discussões e compartilhamento de experiências. -->
+- Um fórum para discussões e compartilhamento de experiências.
 
 ## Instalação e Execução
 1. No seu terminal, clone o repositório.
